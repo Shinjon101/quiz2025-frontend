@@ -28,121 +28,92 @@ export default function SchoolsTable({ schools, userRole }: Props) {
   const columns: TableColumn<School>[] = [
     {
       name: "",
-      cell: (school) => {
-        const isAdmin = userRole === "admin";
+      cell: () => {
+        /*      const isAdmin = userRole === "admin";
         const isAdminOrModerator = isAdmin || userRole === "moderator";
         const skipMessageButton =
-          school.coordinator.email.includes("yuvajanasamiti.org");
+          school.coordinator.email.includes("yuvajanasamiti.org"); */
 
         return (
           <div className="d-flex">
-            {isAdmin && (
-              <a
-                className="btn btn-success btn-sm me-1"
-                rel="noreferrer"
-                href={``}
-              >
-                <i className="bi bi-whatsapp"></i>
-              </a>
-            )}
-            {isAdminOrModerator && !skipMessageButton && (
-              <a
-                className="btn btn-secondary btn-sm me-1"
-                target="_blank"
-                rel="noreferrer"
-                href={``}
-              >
-                <i className="bi bi-chat-square-dots"></i>
-              </a>
-            )}
-            {isAdmin && (
-              <a
-                className="btn btn-primary btn-sm"
-                target="_blank"
-                rel="noreferrer"
-                href={``}
-              >
-                <i className="bi bi-key"></i>
-              </a>
-            )}
+            <a className="btn btn-success btn-sm me-1" href={``}>
+              <i className="bi bi-whatsapp"></i>
+            </a>
+
+            <a className="btn btn-secondary btn-sm me-1" href={``}>
+              <i className="bi bi-chat-square-dots"></i>
+            </a>
+
+            <a className="btn btn-primary btn-sm">
+              <i className="bi bi-key"></i>
+            </a>
           </div>
         );
       },
-      minWidth: "180px",
+      // minWidth: "180px",
     },
     {
       name: "School ID",
       selector: (row) => row.id,
       sortable: true,
-      width: "120px",
+      // width: "120px",
     },
     {
       name: "Email",
       selector: (row) => (userRole === "admin" ? row.coordinator.email : "-"),
       sortable: true,
-      minWidth: "250px",
       wrap: true,
+      minWidth: "150px",
     },
     {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      minWidth: "200px",
+      wrap: true,
+      // minWidth: "200px",
     },
     {
       name: "City/Town",
       selector: (row) => row.city,
       sortable: true,
-      minWidth: "150px",
+      //minWidth: "150px",
     },
     {
       name: "Moderator",
       selector: (row) => row.moderator.name,
       sortable: true,
-      minWidth: "200px",
+      // minWidth: "200px",
     },
     {
       name: "Coordinator",
       selector: (row) => row.coordinator.name,
       sortable: true,
-      minWidth: "200px",
+      //minWidth: "200px",
     },
     {
       name: "Actions",
       cell: (school) => (
-        <div className="d-flex gap-1">
-          <a
-            className="btn btn-primary btn-sm"
-            href={`/admin/schools/${school.id}?back=schools`}
-          >
+        <div className="d-flex justify-content-start align-items-center gap-1">
+          <a className="btn btn-primary btn-sm">
             <i className="bi bi-eye"></i>
           </a>
-          {userRole === "admin" && (
-            <>
-              <a
-                className="btn btn-info btn-sm"
-                href={`tel:${school.coordinator.phone}`}
-              >
-                <i className="bi bi-telephone"></i>
-              </a>
-              <a
-                className="btn btn-secondary btn-sm"
-                href={`/admin/schools/${school.id}/edit?back=schools`}
-              >
-                <i className="bi bi-pencil-square"></i>
-              </a>
-              <Button
-                size="sm"
-                variant="danger"
-                onClick={() => setDeleteTarget(school)}
-              >
-                <i className="bi bi-trash"></i>
-              </Button>
-            </>
-          )}
+
+          <a className="btn btn-info btn-sm">
+            <i className="bi bi-telephone"></i>
+          </a>
+          <a className="btn btn-secondary btn-sm">
+            <i className="bi bi-pencil-square"></i>
+          </a>
+          <Button
+            size="sm"
+            variant="danger"
+            onClick={() => setDeleteTarget(school)}
+          >
+            <i className="bi bi-trash"></i>
+          </Button>
         </div>
       ),
-      minWidth: "180px",
+      // minWidth: "180px",
     },
   ];
 
@@ -159,11 +130,11 @@ export default function SchoolsTable({ schools, userRole }: Props) {
   });
 
   return (
-    <main className="py-4 container-fluid">
+    <div className="py-4 container-fluid">
       {/* Header + Add button row */}
       <div className="row mb-3">
         <div className="col d-flex justify-content-between align-items-center">
-          <h1 className="h2 mb-0">All Schools</h1>
+          <h2 className="mb-0">All Schools</h2>
           <a
             className="btn btn-secondary"
             href="/admin/school/new?back=schools"
@@ -200,18 +171,13 @@ export default function SchoolsTable({ schools, userRole }: Props) {
               highlightOnHover
               striped
               responsive
-              fixedHeader
-              fixedHeaderScrollHeight="450px"
               persistTableHead
               noDataComponent={
                 <div className="text-center py-3 w-100">No results found</div>
               }
               customStyles={{
                 table: {
-                  style: {
-                    tableLayout: "fixed",
-                    width: "100%",
-                  },
+                  style: {},
                 },
                 headCells: { style: { fontWeight: "bold" } },
                 cells: {
@@ -239,14 +205,9 @@ export default function SchoolsTable({ schools, userRole }: Props) {
           <Button variant="secondary" onClick={() => setDeleteTarget(null)}>
             No
           </Button>
-          <a
-            href={`/admin/schools/${deleteTarget?.id}/delete?back=schools`}
-            className="btn btn-danger"
-          >
-            Yes
-          </a>
+          <a className="btn btn-danger">Yes</a>
         </Modal.Footer>
       </Modal>
-    </main>
+    </div>
   );
 }

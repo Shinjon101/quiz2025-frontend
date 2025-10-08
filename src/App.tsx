@@ -1,12 +1,16 @@
+import Sidebar from "./components/Sidebar";
 import SchoolsTable from "./pages/SchoolsTable";
 import { mockSchools } from "./tests/mocks/mockSchools";
-
-function App() {
+export default function App() {
   return (
-    <div>
-      <SchoolsTable schools={mockSchools} userRole="admin" />
+    <div className="container-fluid">
+      <div className="row">
+        <Sidebar />
+
+        <main className="col-md-9 col-lg-10 ms-sm-auto px-md-4">
+          <SchoolsTable schools={mockSchools} userRole="admin" />
+        </main>
+      </div>
     </div>
   );
 }
-
-export default App;
