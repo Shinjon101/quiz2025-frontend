@@ -1,7 +1,12 @@
-import React from "react";
+import SchoolsTable from "./pages/SchoolsTable";
+import { mockSchools } from "./tests/mocks/mockSchools";
 
-const App = () => {
-  return <div>App</div>;
-};
+function App() {
+  return (
+    <div>
+      <SchoolsTable schools={mockSchools} userRole="admin" />
+    </div>
+  );
+}
 
 export default App;
