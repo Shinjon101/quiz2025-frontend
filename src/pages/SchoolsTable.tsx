@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DataTable, { type TableColumn } from "react-data-table-component";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 
 interface User {
   name: string;
@@ -23,6 +23,7 @@ interface Props {
 
 export default function SchoolsTable({ schools, userRole }: Props) {
   const [deleteTarget, setDeleteTarget] = useState<School | null>(null);
+  const [searchText, setSearchText] = useState("");
 
   const columns: TableColumn<School>[] = [
     {
@@ -34,34 +35,32 @@ export default function SchoolsTable({ schools, userRole }: Props) {
           school.coordinator.email.includes("yuvajanasamiti.org");
 
         return (
-          <div className="">
+          <div className="d-flex">
             {isAdmin && (
               <a
                 className="btn btn-success btn-sm me-1"
                 rel="noreferrer"
-                href={`https://api.whatsapp.com/send/?phone=+91${school.coordinator.phone}&text=Namaste *${school.coordinator.name}* garu%0A%0APlease join Vivekananda QUIZ 2025 Whatsapp group%0A%0AWhatsapp group link: https://chat.whatsapp.com/DyHRcVkLUTYIlL7eoZMDqe`}
+                href={``}
               >
                 <i className="bi bi-whatsapp"></i>
               </a>
             )}
-
             {isAdminOrModerator && !skipMessageButton && (
               <a
-                className="btn btn-secondary btn-sm me-1 "
+                className="btn btn-secondary btn-sm me-1"
                 target="_blank"
                 rel="noreferrer"
-                href={`https://api.whatsapp.com/send/?phone=+91${school.coordinator.phone}&text=Welcome message for ${school.name}`}
+                href={``}
               >
                 <i className="bi bi-chat-square-dots"></i>
               </a>
             )}
-
             {isAdmin && (
               <a
                 className="btn btn-primary btn-sm"
                 target="_blank"
                 rel="noreferrer"
-                href={`https://api.whatsapp.com/send/?phone=+91${school.coordinator.phone}&text=Your Coordinator account has been activated. Password: Vivekananda@2023`}
+                href={``}
               >
                 <i className="bi bi-key"></i>
               </a>
@@ -75,7 +74,7 @@ export default function SchoolsTable({ schools, userRole }: Props) {
       name: "School ID",
       selector: (row) => row.id,
       sortable: true,
-      minWidth: "100px",
+      width: "120px",
     },
     {
       name: "Email",
@@ -88,57 +87,50 @@ export default function SchoolsTable({ schools, userRole }: Props) {
       name: "Name",
       selector: (row) => row.name,
       sortable: true,
-      wrap: true,
-      minWidth: "150px",
+      minWidth: "200px",
     },
     {
       name: "City/Town",
       selector: (row) => row.city,
       sortable: true,
-      wrap: true,
-      minWidth: "120px",
+      minWidth: "150px",
     },
     {
       name: "Moderator",
       selector: (row) => row.moderator.name,
       sortable: true,
-      wrap: true,
-      minWidth: "150px",
+      minWidth: "200px",
     },
     {
       name: "Coordinator",
       selector: (row) => row.coordinator.name,
       sortable: true,
-      wrap: true,
-      minWidth: "150px",
+      minWidth: "200px",
     },
     {
       name: "Actions",
       cell: (school) => (
-        <div className="gap-1">
+        <div className="d-flex gap-1">
           <a
-            className="btn btn-primary btn-sm me-1"
+            className="btn btn-primary btn-sm"
             href={`/admin/schools/${school.id}?back=schools`}
           >
             <i className="bi bi-eye"></i>
           </a>
-
           {userRole === "admin" && (
             <>
               <a
-                className="btn btn-info btn-sm me-1"
+                className="btn btn-info btn-sm"
                 href={`tel:${school.coordinator.phone}`}
               >
                 <i className="bi bi-telephone"></i>
               </a>
-
               <a
-                className="btn btn-secondary btn-sm me-1"
+                className="btn btn-secondary btn-sm"
                 href={`/admin/schools/${school.id}/edit?back=schools`}
               >
                 <i className="bi bi-pencil-square"></i>
               </a>
-
               <Button
                 size="sm"
                 variant="danger"
@@ -154,34 +146,84 @@ export default function SchoolsTable({ schools, userRole }: Props) {
     },
   ];
 
+  const filteredSchools = schools.filter((s) => {
+    const search = searchText.toLowerCase();
+    return (
+      s.name.toLowerCase().includes(search) ||
+      s.city.toLowerCase().includes(search) ||
+      s.id.toLowerCase().includes(search) ||
+      s.moderator.name.toLowerCase().includes(search) ||
+      s.coordinator.name.toLowerCase().includes(search) ||
+      s.coordinator.email.toLowerCase().includes(search)
+    );
+  });
+
   return (
-    <main className="container-fluid py-4">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1 className="h2">All Schools</h1>
-        <a className="btn btn-secondary" href="/admin/school/new?back=schools">
-          Add School <i className="bi bi-plus-circle"></i>
-        </a>
+    <main className="py-4 container-fluid">
+      {/* Header + Add button row */}
+      <div className="row mb-3">
+        <div className="col d-flex justify-content-between align-items-center">
+          <h1 className="h2 mb-0">All Schools</h1>
+          <a
+            className="btn btn-secondary"
+            href="/admin/school/new?back=schools"
+          >
+            Add School <i className="bi bi-plus-circle"></i>
+          </a>
+        </div>
       </div>
 
-      <div style={{ overflowX: "auto" }}>
-        <DataTable
-          columns={columns}
-          data={schools}
-          pagination
-          highlightOnHover
-          striped
-          responsive
-          defaultSortFieldId={1}
-          fixedHeader
-          fixedHeaderScrollHeight="500px"
-          customStyles={{
-            table: { style: { tableLayout: "auto", width: "100%" } },
-            headCells: { style: { fontWeight: "bold" } },
-            cells: { style: { whiteSpace: "normal", wordBreak: "break-word" } },
-          }}
-        />
+      {/* Search bar row */}
+      <div className="row mb-3">
+        <div className="col d-flex justify-content-end">
+          <Form.Control
+            type="text"
+            placeholder="Search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            style={{ maxWidth: "250px" }}
+          />
+        </div>
       </div>
 
+      {/* Table row */}
+      <div className="row">
+        <div className="col">
+          <div
+            className="border rounded bg-white"
+            style={{ minHeight: "500px" }}
+          >
+            <DataTable
+              columns={columns}
+              data={filteredSchools}
+              pagination
+              highlightOnHover
+              striped
+              responsive
+              fixedHeader
+              fixedHeaderScrollHeight="450px"
+              persistTableHead
+              noDataComponent={
+                <div className="text-center py-3 w-100">No results found</div>
+              }
+              customStyles={{
+                table: {
+                  style: {
+                    tableLayout: "fixed",
+                    width: "100%",
+                  },
+                },
+                headCells: { style: { fontWeight: "bold" } },
+                cells: {
+                  style: { whiteSpace: "normal", wordBreak: "break-word" },
+                },
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Delete Modal */}
       <Modal
         show={!!deleteTarget}
         onHide={() => setDeleteTarget(null)}
