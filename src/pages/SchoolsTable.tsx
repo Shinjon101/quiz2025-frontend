@@ -29,11 +29,6 @@ export default function SchoolsTable({ schools, userRole }: Props) {
     {
       name: "",
       cell: () => {
-        /*      const isAdmin = userRole === "admin";
-        const isAdminOrModerator = isAdmin || userRole === "moderator";
-        const skipMessageButton =
-          school.coordinator.email.includes("yuvajanasamiti.org"); */
-
         return (
           <div className="d-flex">
             <a className="btn btn-success btn-sm me-1" href={``}>
@@ -113,7 +108,7 @@ export default function SchoolsTable({ schools, userRole }: Props) {
           </Button>
         </div>
       ),
-      // minWidth: "180px",
+      minWidth: "180px",
     },
   ];
 
@@ -133,7 +128,7 @@ export default function SchoolsTable({ schools, userRole }: Props) {
     <div className="py-4 container-fluid">
       {/* Header + Add button row */}
       <div className="row mb-3">
-        <div className="col d-flex justify-content-between align-items-center">
+        <div className="col-12 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
           <h2 className="mb-0">All Schools</h2>
           <a
             className="btn btn-secondary"
@@ -146,7 +141,7 @@ export default function SchoolsTable({ schools, userRole }: Props) {
 
       {/* Search bar row */}
       <div className="row mb-3">
-        <div className="col d-flex justify-content-end">
+        <div className="col d-flex  flex-column flex-md-row justify-content-between align-items-start align-items-md-center justify-content-md-end">
           <Form.Control
             type="text"
             placeholder="Search"
