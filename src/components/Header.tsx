@@ -9,7 +9,7 @@ export default function Header({ onToggleSidebar }: Props) {
   return (
     <header>
       <nav
-        className="navbar navbar-dark bg-dark shadow p-3 flex-md-nowrap"
+        className="navbar navbar-dark bg-dark shadow p-2 flex-md-nowrap"
         style={{
           position: "fixed",
           top: 0,
