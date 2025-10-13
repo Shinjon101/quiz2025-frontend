@@ -42,7 +42,7 @@ export default function Sidebar({ show, onHide }: Props) {
 
       {/* Desktop Sidebar */}
       <aside
-        className="col-md-3 col-lg-2 bg-light sidebar d-none d-md-flex flex-column flex-shrink-0 p-3 mt-4"
+        className="col-md-3 col-lg-2 bg-light sidebar d-md-flex flex-column flex-shrink-0 p-3"
         style={{ height: "100vh", overflowY: "auto" }}
       >
         <SidebarContent counts={counts} />
@@ -63,8 +63,10 @@ function SidebarContent({
   return (
     <div className=" flex-grow-1">
       <div className="d-flex flex-row align-items-center justify-content-between">
-        <strong className="fs-5">ADMIN</strong>
-        <i className="bi bi-person-circle fs-5" />
+        <div className="d-flex justify-content-center align-items-center gap-1">
+          <i className="bi bi-person-circle fs-4" />
+          <strong className="fs-5">ADMIN</strong>
+        </div>
         <button className="btn btn-link text-dark bi bi-three-dots-vertical fs-5" />
       </div>
 

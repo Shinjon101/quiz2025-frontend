@@ -23,7 +23,7 @@ export default function BulkUpdatePage() {
 
   const participants = [
     { id: "P001", name: "Aarav Singh", status: "verified" },
-    { id: "P002", name: "Koyel Das", status: "pending" },
+    { id: "P002", name: "Ram Das", status: "pending" },
     { id: "P003", name: "Ravi Mehta", status: "verified" },
     { id: "P004", name: "Nisha Patel", status: "pending" },
   ];
@@ -56,31 +56,12 @@ export default function BulkUpdatePage() {
   }
 
   return (
-    <main>
+    <div className="px-md-4">
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 className="h2">Bulk Update</h1>
       </div>
 
-      <style>{`
-        th { text-transform: capitalize; }
-        .action-btn { margin-right: 5px; }
-        label { font-size: 16px; font-weight: bold; }
-        small kbd {
-          vertical-align: middle;
-          padding: 2px 6px;
-          user-select: none !important;
-          font-size: 16px;
-          font-weight: bold;
-          background: white;
-          color: black;
-          border: 1px solid black;
-        }
-        .table-responsive::-webkit-scrollbar { height: 12px !important; cursor: pointer !important; }
-        .react-select-container { width: 100%; }
-        .react-select__control { min-height: 40px; }
-      `}</style>
-
-      <form onSubmit={handleSubmit}>
+      <form className="container" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-sm-4 mb-3">
             <label htmlFor="school" className="form-label">
@@ -99,12 +80,11 @@ export default function BulkUpdatePage() {
               closeMenuOnSelect={false}
               noOptionsMessage={() => "No schools"}
             />
-            <strong id="schoolMsg" className="text-danger" />
           </div>
 
           <div className="col-sm-4 mb-3">
             <label htmlFor="class" className="form-label">
-              Select class
+              Select Class
             </label>
             <Select
               inputId="class"
@@ -119,7 +99,6 @@ export default function BulkUpdatePage() {
               closeMenuOnSelect={false}
               noOptionsMessage={() => "No classes"}
             />
-            <strong id="classMsg" className="text-danger" />
           </div>
 
           <div className="col-sm-4 mb-3">
@@ -139,10 +118,9 @@ export default function BulkUpdatePage() {
               closeMenuOnSelect={false}
               noOptionsMessage={() => "No participants"}
             />
-            <strong id="idMsg" className="text-danger" />
           </div>
 
-          <div className="mb-3 col-4">
+          <div className="col-sm-4 mb-3">
             <label htmlFor="status" className="form-label">
               Status
             </label>
@@ -158,21 +136,21 @@ export default function BulkUpdatePage() {
               <option value="pending">Pending</option>
             </select>
           </div>
-        </div>
 
-        <div className="d-flex gap-2 mt-3">
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => window.history.back()}
-          >
-            Back
-          </button>
-          <button type="submit" className="btn btn-primary">
-            Update
-          </button>
+          <div className="col-sm-12 my-5">
+            <button
+              type="button"
+              className="btn btn-secondary me-2"
+              onClick={() => window.history.back()}
+            >
+              Back
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Update
+            </button>
+          </div>
         </div>
       </form>
-    </main>
+    </div>
   );
 }

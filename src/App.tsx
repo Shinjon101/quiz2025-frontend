@@ -19,8 +19,8 @@ export default function App() {
           <Sidebar show={sidebarOpen} onHide={() => setSidebarOpen(false)} />
 
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4 mt-sm-3">
-            <BulkUpdatePage />
-            {/*   <AddSchoolForm /> */}
+            {/*  <BulkUpdatePage /> */}
+            <AddSchoolForm />
             {/*  <SchoolsTable schools={mockSchools} userRole="admin" /> */}
           </main>
         </div>
