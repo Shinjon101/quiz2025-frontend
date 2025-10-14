@@ -6,6 +6,7 @@ import { mockSchools } from "./tests/mocks/mockSchools";
 import AddSchoolPage from "./components/AddSchoolForm";
 import AddSchoolForm from "./components/AddSchoolForm";
 import BulkUpdatePage from "./pages/BulkUpdatePage";
+import EditSchoolForm from "./components/EditSchoolForm";
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,9 +20,9 @@ export default function App() {
           <Sidebar show={sidebarOpen} onHide={() => setSidebarOpen(false)} />
 
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 pt-4 mt-sm-3">
-            {/*  <BulkUpdatePage /> */}
-            <AddSchoolForm />
-            {/*  <SchoolsTable schools={mockSchools} userRole="admin" /> */}
+            <BulkUpdatePage />
+            {/*    <EditSchoolForm /> */}
+            {/*      <SchoolsTable schools={mockSchools} userRole="admin" /> */}
           </main>
         </div>
       </div>
