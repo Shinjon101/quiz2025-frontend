@@ -1,4 +1,4 @@
-import logo from "../assets/KEl.png";
+import logo from "../../assets/KEl.png";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 interface Props {
