@@ -6,10 +6,6 @@ interface DataTableProps<T> {
   title: string;
   data: T[];
   columns: TableColumn<T>[];
-  addButton?: {
-    label: string;
-    href: string;
-  };
   searchKeys?: (keyof T)[];
   minHeight?: string;
 }
@@ -18,7 +14,6 @@ export default function DataTable<T extends Record<string, any>>({
   title,
   data,
   columns,
-  addButton,
   searchKeys = [],
   minHeight = "500px",
 }: DataTableProps<T>) {
@@ -35,15 +30,10 @@ export default function DataTable<T extends Record<string, any>>({
 
   return (
     <div className="py-4 container-fluid">
-      {/* Header + Add button row */}
+      {/* Header row */}
       <div className="row mb-3">
         <div className="col-12 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
           <h2 className="mb-0">{title}</h2>
-          {addButton && (
-            <a className="btn btn-secondary" href={addButton.href}>
-              {addButton.label} <i className="bi bi-plus-circle"></i>
-            </a>
-          )}
         </div>
       </div>
 
